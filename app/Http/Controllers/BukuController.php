@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Buku;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class BukuController extends Controller
 {
@@ -32,6 +33,20 @@ class BukuController extends Controller
      */
     public function store(Request $request)
     {
+        Session::flash('judul',$request->judul);
+        Session::flash('penulis',$request->penulis);
+        Session::flash('harga',$request->harga);
+
+        $request->validate([
+            'judul' => 'required',
+            'penulis' => 'required',
+            'harga' => 'required'
+        ],[
+            'judul.required' => 'judul wajib diisi',
+            'penulis' => 'penulis wajib diisi',
+            'harga' => 'harga wajib diisi'
+        ]);
+
         $data_buku = new Buku;
         $data_buku->judul = $request->judul;
         $data_buku->penulis = $request->penulis;
@@ -53,8 +68,8 @@ class BukuController extends Controller
      */
     public function edit(string $id)
     {
-        $update_buku = Buku::all()->where('id',$id)->get('id');
-        return view('edit', ['update_buku'=>$update_buku]);
+        $update_buku = Buku::find($id);
+        return view('edit', ['update_buku' => $update_buku]);
         //
     }
 
@@ -63,12 +78,14 @@ class BukuController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        Buku::all()->where('id',$request->id)->update([
-            'judul'=> $request->nama,
-            'penulis' => $request->jabatan,
-            'harga' => $request->umur,
 
-        ]);
+
+        $data_buku = Buku::find($id);
+        $data_buku->judul = $request->judul;
+        $data_buku->penulis = $request->penulis;
+        $data_buku->harga = $request->harga;
+        $data_buku->save();
+
         return redirect('/buku');
 
     }

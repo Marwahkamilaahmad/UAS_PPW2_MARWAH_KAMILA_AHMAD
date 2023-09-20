@@ -18,15 +18,15 @@
     @csrf
   <div class="form-group">
     <label for="judul">Judul</label>
-    <input type="text" class="form-control" id="judul"  name="judul"  placeholder="Enter judul">
+    <input type="text" class="form-control" id="judul"  name="judul"  placeholder="Enter judul" value="{{ Session::get('judul')}}">
   </div>
   <div class="form-group">
     <label for="penulis">Penulis</label>
-    <input type="text" class="form-control" id="penulis" name="penulis" placeholder="Enter penulis">
+    <input type="text" class="form-control" id="penulis" name="penulis" placeholder="Enter penulis" value="{{ Session::get('penulis')}}">
   </div>
   <div class="form-group">
     <label for="harga">Harga</label>
-    <input type="text" class="form-control" id="harga" name="harga" placeholder="Enter harga">
+    <input type="text" class="form-control" id="harga" name="harga" placeholder="Enter harga" value="{{ Session::get('harga')}}">
   </div>
   <button type="submit" class="btn btn-primary">Simpan</button>
 </form>

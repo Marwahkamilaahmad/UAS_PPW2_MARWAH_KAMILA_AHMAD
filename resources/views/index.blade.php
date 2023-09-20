@@ -38,14 +38,14 @@
             <button type="submit" class="btn btn-outline-primary">Hapus</button>
         </form>
         <!-- <a href="{{route('buku.destroy',['buku' => $data_buku->id])}}" type="button" class="btn btn-outline-primary" >Hapus</a> -->
-        <a href="/pegawai/edit/{{ $data_buku->id }}" type="button" class="btn btn-outline-primary">Edit</a>
+        <a href="{{ route('buku.edit', ['buku' => $data_buku->id]) }}" class="btn btn-outline-primary">Edit</a>
     </td>
     </tr>
     @endforeach
     </tbody>
-
 </table>
 </div>
 
 </body>
 </html>
+<!-- /buku/edit/{{ $data_buku->id }} -->
