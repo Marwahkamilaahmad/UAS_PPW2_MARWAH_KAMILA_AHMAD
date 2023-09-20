@@ -14,17 +14,13 @@ class BukuController extends Controller
      */
     public function index()
     {
-        $data_buku = DB::table('buku_migration')->get();
-        $data_buku = Buku::all()->sortByDesc('id');
+        $data_buku = Buku::all();
 
 
-        return view('index', ['data_buku' => 'buku']);
-
+        return view('index', ['buku' => $data_buku]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         return view('create');
@@ -83,8 +79,8 @@ class BukuController extends Controller
     public function destroy(string $id)
     {
         //
-        $data_buku = Buku::find($id);
-        $data_buku->delete();
+        $data_hapus = Buku::find($id);
+        $data_hapus->delete();
         return redirect('/buku');
     }
 }
