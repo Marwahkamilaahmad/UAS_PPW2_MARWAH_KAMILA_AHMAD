@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Buku extends Model
 {
+    protected $table = 'buku_migration';
+    protected $guarded = [];
     use HasFactory;
 }
