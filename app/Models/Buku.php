@@ -9,5 +9,7 @@ class Buku extends Model
 {
     protected $table = 'buku_migration';
     protected $guarded = [];
+    protected $dates = ['tanggal'];
+
     use HasFactory;
 }

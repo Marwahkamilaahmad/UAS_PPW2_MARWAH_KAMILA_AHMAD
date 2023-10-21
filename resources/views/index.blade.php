@@ -12,8 +12,26 @@
 </head>
 <body>
     <h1 class="text-center" >SISTEM CRUD</h1>
-    <td><a href="{{route('buku.create') }}" type="button" class="btn btn-outline-primary">Create</a>
     <div class="container">
+    <a href="{{route('buku.create') }}" type="button" class="btn btn-outline-primary px-5 my-5">Create</a>
+
+    @if(Session::has('status'))
+    <div class="alert alert-success" role="alert">
+        {{ Session::get('message') }}
+    </div>
+@endif
+
+    <form action="{{ route('buku.search') }}" method="get">
+                        @csrf
+        <div class="input-group">
+            <input type="text" name="kata" class="form-control" placeholder="Cari..." aria-label="Cari" style="border-radius: 8px 0 0 8px">
+            <button type="submit" class="btn btn-primary" style="border-radius: 0 8px 8px 0">
+            <i class="fas fa-search">Cari</i>
+            </button>
+        </div>
+    </form>
+    <br><br>
+
 <table class="table table-striped table-hover">
     <thead>
     <tr>
@@ -21,6 +39,7 @@
         <th>judul buku</th>
         <th>penulis</th>
         <th>harga</th>
+        <th>tanggal</th>
         <th>aksi</th>
     </tr>
     </thead>
@@ -31,21 +50,29 @@
         <td>{{ $data_buku->judul }}</td>
         <td>{{ $data_buku->penulis }}</td>
         <td>{{ "Rp".$data_buku->harga }}</td>
+        <td>{{ $data_buku->tanggal }}</td>
         <td>
         <form action="{{ route('buku.destroy', ['buku' => $data_buku->id]) }}" method="POST">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-outline-primary">Hapus</button>
+            <a href="{{ route('buku.show', $data_buku->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a>
+            <a href="{{ route('buku.edit', $data_buku->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
+            <button type="submit" class="btn btn-outline-danger">Hapus</button>
         </form>
-        <!-- <a href="{{route('buku.destroy',['buku' => $data_buku->id])}}" type="button" class="btn btn-outline-primary" >Hapus</a> -->
         <a href="{{ route('buku.edit', ['buku' => $data_buku->id]) }}" class="btn btn-outline-primary">Edit</a>
     </td>
     </tr>
     @endforeach
     </tbody>
 </table>
+<div>
+        total buku : {{$banyak_buku}}
+    </div>
+<div>
+    <ul class="pagination justify-content-center">
+        {{ $buku->links() }}
+    </ul>
 </div>
-
+</div>
 </body>
 </html>
-<!-- /buku/edit/{{ $data_buku->id }} -->

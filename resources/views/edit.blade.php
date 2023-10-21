@@ -12,27 +12,40 @@
 </head>
 <body>
 <div class="container">
-    <h4 class="text-align">EDIT BUKU</h4>
-    <form method="post" action="{{ route('buku.update', ['buku' => $update_buku->id]) }}">
+    <h4 class="text-center">EDIT BUKU</h4>
+    <form method="post" action="{{ route('buku.update', ['buku' => $update_buku->id]) }}" class="form">
         @csrf
         @method('PUT')
-        <div class="form-group">
-            <label for="judul">Judul</label>
-            <input type="text" class="form-control" id="judul" name="judul" value="{{ $update_buku->judul }}">
+
+        <div class="form-group row">
+            <label for="judul" class="col-sm-2 col-form-label">Judul</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="judul" name="judul" value="{{ $update_buku->judul }}">
+            </div>
         </div>
-        <div class="form-group">
-            <label for="penulis">Penulis</label>
-            <input type="text" class="form-control" id="penulis" name="penulis" value="{{ $update_buku->penulis }}">
+
+        <div class="form-group row">
+            <label for="penulis" class="col-sm-2 col-form-label">Penulis</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="penulis" name="penulis" value="{{ $update_buku->penulis }}">
+            </div>
         </div>
-        <div class="form-group">
-            <label for="harga">Harga</label>
-            <input type="text" class="form-control" id="harga" name="harga" value="{{ $update_buku->harga }}">
+
+        <div class="form-group row">
+            <label for="harga" class="col-sm-2 col-form-label">Harga</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="harga" name="harga" value="{{ $update_buku->harga }}">
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Simpan</button>
+
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+        </div>
     </form>
+    <div class="d-flex justify-content-end"><a href="/buku" type="button" class="btn btn-primary">Batal</a></div>
 </div>
-<div>
-    <a href="/buku" type="button" class="btn btn-primary">Batal</a>
-</div>
+
 </body>
 </html>

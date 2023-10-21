@@ -15,10 +15,16 @@ class BukuController extends Controller
      */
     public function index()
     {
-        $data_buku = Buku::all();
+        $banyak_buku = Buku::all()->count();
+        return view('index', ['buku' => Buku::paginate(5),'banyak_buku'=>$banyak_buku]);
+    }
 
-
-        return view('index', ['buku' => $data_buku]);
+    public function search(Request $request){
+        $batas = 5;
+        $cari = $request->kata;
+        $data_buku = Buku::where('judul', 'like', "%".$cari."%")->orwhere('penulis', 'like', "%".$cari."%")
+            ->paginate($batas);
+        return view('search', compact('data_buku', 'cari'));
     }
 
 
@@ -37,30 +43,36 @@ class BukuController extends Controller
         Session::flash('penulis',$request->penulis);
         Session::flash('harga',$request->harga);
 
-        $request->validate([
+        $validated = $request->validate([
             'judul' => 'required',
-            'penulis' => 'required',
-            'harga' => 'required'
+            'penulis' => 'max:50|required',
+            'harga' => 'required|numeric'
         ],[
             'judul.required' => 'judul wajib diisi',
-            'penulis' => 'penulis wajib diisi',
-            'harga' => 'harga wajib diisi'
+            'penulis.required' => 'penulis wajib diisi',
+            'harga.required' => 'harga wajib diisi'
         ]);
 
         $data_buku = new Buku;
         $data_buku->judul = $request->judul;
         $data_buku->penulis = $request->penulis;
         $data_buku->harga = $request->harga;
+        $data_buku->tanggal = $request->tanggal;
         $data_buku->save();
+
+        Session::flash('status', 'success');
+        Session::flash('message', 'add new buku success');
+
         return redirect('/buku');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Buku $buku)
     {
         //
+        return view('show',['buku'=> $buku]);
     }
 
     /**

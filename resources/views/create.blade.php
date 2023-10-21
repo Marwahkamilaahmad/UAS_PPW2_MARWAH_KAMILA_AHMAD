@@ -13,26 +13,61 @@
 </head>
 <body>
 <div class="container">
-    <h4 class="text-align">TAMBAH BUKU</h4>
+    <h4 class="text-center">TAMBAH BUKU</h4>
+
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
 <form method="post" action="{{ route('buku.store') }}">
     @csrf
-  <div class="form-group">
-    <label for="judul">Judul</label>
+  <div class="form-group row">
+    <label for="judul" class="col-sm-2 col-form-label">Judul</label>
+    <div class="col-sm-10">
     <input type="text" class="form-control" id="judul"  name="judul"  placeholder="Enter judul" value="{{ Session::get('judul')}}">
+    </div>
   </div>
-  <div class="form-group">
-    <label for="penulis">Penulis</label>
+  <div class="form-group row">
+    <label for="penulis" class="col-sm-2 col-form-label">Penulis</label>
+    <div class="col-sm-10">
     <input type="text" class="form-control" id="penulis" name="penulis" placeholder="Enter penulis" value="{{ Session::get('penulis')}}">
   </div>
-  <div class="form-group">
-    <label for="harga">Harga</label>
+  </div>
+  <div class="form-group row">
+    <label for="harga" class="col-sm-2 col-form-label">Harga</label>
+    <div class="col-sm-10">
     <input type="text" class="form-control" id="harga" name="harga" placeholder="Enter harga" value="{{ Session::get('harga')}}">
+  </div>
+  </div>
+  <div class="form-group row">
+    <label for="tanggal" class="col-sm-2 col-form-label">Tanggal</label>
+    <div class="col-sm-10">
+    <div class='input-group date' id='datetimepicker'>
+    <input type="date" class="form-control" id="tanggal" name="tanggal" placeholder="Enter tanggal" value="{{ Session::get('tanggal')}}">
+  </div>
+  </div>
   </div>
   <button type="submit" class="btn btn-primary">Simpan</button>
 </form>
-</div>
-<div>
+<div class="d-flex justify-content-end">
 <a href="/buku" type="button" class="btn btn-primary">Batal</a>
 </div>
+</div>
+<div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+
 </body>
 </html>
+
