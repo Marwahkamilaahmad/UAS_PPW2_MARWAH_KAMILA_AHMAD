@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('penulis');
             $table->integer('harga');
             $table->date('tanggal');
+            $table->integer('inputan');
+            $table->integer('rating')->nullable();
             $table->timestamps();
         });
     }
