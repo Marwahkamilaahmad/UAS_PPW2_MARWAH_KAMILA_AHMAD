@@ -18,4 +18,9 @@ class Buku extends Model
     public function galleries() : HasMany {
         return $this->hasMany(Gallery::class);
     }
+
+    public function kategoris()
+    {
+    return $this->hasMany(KategoriBuku::class);
+    }
 }

@@ -73,7 +73,7 @@
         </div>
 
         <div class="form-group row">
-            <label for="thumbnail" class="col-sm-2 col-form-label">thumbnail</label>
+            <label for="thumbnail" class="col-sm-2 col-form-label">thumbnail<span class="text-red-500">(wajib diisi)</span></label>
             <div class="col-sm-10">
                 <input type="file" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="thumbnail" name="thumbnail" value="{{ $update_buku->thumbnail }}">
             </div>

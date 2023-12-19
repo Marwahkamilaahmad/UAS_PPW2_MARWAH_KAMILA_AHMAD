@@ -22,30 +22,32 @@
 
     <!-- As a heading -->
 
-
     <h1 class="text-4xl text-gray-900 dark:text-white text-center mb-6 mt-10" >SISTEM CRUD</h1>
     <div class="container">
-    @if(Session::has('status'))
-    <div class="alert alert-success" role="alert">
-        {{ Session::get('message') }}
-    </div>
-@endif
-
-    <!-- <form action="{{ route('buku.search') }}" method="get">
-       @csrf
-        <div class="input-group">
-            <input type="text" name="kata" class="form-control" placeholder="Cari..." aria-label="Cari" style="border-radius: 8px 0 0 8px">
-            <button type="submit" class="btn btn-light" style="border-radius: 0 8px 8px 0">
-            <i class="fas fa-search">Cari</i>
-            </button>
+        <div class="h-50 bg-white px-5 py-5 mb-5 justify-center">
+            <p class="text-center">tampilkan berdasarkan kategori</p>
+            <div class="flex justify-center space-x-2">
+            <a href="/bukuPopuler" type="button" class="bg-black hover:bg-yellow-600 text-white py-1 px-2 rounded mr-2 mb-3">Manga</a>
+            <a href="/bukuPopuler" type="button" class="bg-black hover:bg-yellow-600 text-white py-1 px-2 rounded mr-2 mb-3">Novel</a>
+            <a href="/bukuPopuler" type="button" class="bg-black hover:bg-yellow-600 text-white py-1 px-2 rounded mr-2 mb-3">Filsafat</a>
+            <a href="/bukuPopuler" type="button" class="bg-black hover:bg-yellow-600 text-white py-1 px-2 rounded mr-2 mb-3">Komik</a>
+            <a href="/bukuPopuler" type="button" class="bg-black hover:bg-yellow-600 text-white py-1 px-2 rounded mr-2 mb-3">Kamus</a>
+            <a href="/bukuPopuler" type="button" class="bg-black hover:bg-yellow-600 text-white py-1 px-2 rounded mr-2 mb-3">Biografi</a>
+            <a href="/bukuPopuler" type="button" class="bg-black hover:bg-yellow-600 text-white py-1 px-2 rounded mr-2 mb-3">Science</a>
+            <a href="/bukuPopuler" type="button" class="bg-black hover:bg-yellow-600 text-white py-1 px-2 rounded mr-2 mb-3">kamus</a>
+            </div>
         </div>
-    </form>
-    <br><br> -->
+    </div>
+
+
+<div class="container">
+
 
 <div class="h-full bg-white px-5 py-5">
 <table class="h-full w-full text-sm text-left text-gray-500 dark:text-gray-400">
 <a href="{{route('buku.create') }}" type="button" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-2 rounded mr-2 mb-3">Create</a>
 <a href="/favourite" type="button" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-2 rounded mr-2 mb-3">Lihat Favoritku</a>
+<a href="/bukuPopuler" type="button" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-2 rounded mr-2 mb-3">Buku Populer</a>
     <thead >
     <tr class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400" >
     <th scope="col" class="px-6 py-3">thumbnail</th>
@@ -56,6 +58,7 @@
         <th scope="col" class="px-6 py-3">Rating</th>
         <th scope="col" class="px-6 py-3">aksi</th>
         <th scope="col" class="px-6 py-3">Favourite</th>
+        <th scope="col" class="px-6 py-3">Kategori</th>
     </tr>
     </thead>
     <tbody>
@@ -82,11 +85,12 @@
             @csrf
             @method('DELETE')
             <a href="{{ route('buku.show', $data_buku->id) }}" class="bg-gray-200 hover:bg-yellow-600 text-black py-1 px-2 rounded"> Show</a>
-           {{-- <a href="{{ route('buku.edit', $data_buku->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a> --}}
             <button type="submit" class="bg-red-500 hover:bg-yellow-600 text-white py-1 px-2 rounded mb-2 ">Hapus</button>
         </form>
         <a href="{{ route('buku.edit', ['buku' => $data_buku->id]) }}" class="bg-gray-200 hover:bg-yellow-600 text-black py-1 px-2 rounded ">Edit</a>
         <a href="{{ route('buku.edit', ['buku' => $data_buku->id]) }}" class="bg-gray-200 hover:bg-yellow-600 text-black py-1 px-2 rounded">Rating</a>
+        </br>
+        <a href="{{ route('tambah.kategori', ['buku' => $data_buku->id]) }}" class="bg-gray-200 hover:bg-yellow-600 text-black py-1 px-2 rounded">+ Kategori</a>
     </td>
    {{-- <td class="px-6 py-4">
         <a href="{{ route('buku.favourite', ['buku' => $data_buku->id]) }}" class="px-3 toggle-heart">
@@ -98,7 +102,9 @@
             <i class="{{ in_array($data_buku->judul, $existingFav) ? 'fa fa-heart' : 'fa fa-heart-o' }}" style="font-size:36px; color: red;"></i>
         </a>
     </td>
-
+    @foreach($kategori as $kategori)
+    <td class="text-center">{{ $kategori->kategori }}</td>
+    @endforeach
     <!-- <td><a href="{{ route('buku.favourite', ['buku' => $data_buku->id]) }}" class="btn btn-outline-primary"><i class="fa fa-heart-o" style="font-size:36px;"></i></a></td> -->
     </tr>
     @endforeach

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Buku;
 use App\Models\Favourite;
+use App\Models\KategoriBuku;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Gallery;
 use Illuminate\Support\Facades\DB;
@@ -26,9 +27,10 @@ class BukuController extends Controller
         $banyak_buku = Buku::all()->count();
         $buku = Buku::all();
         $user = Auth::user()->id;
+        $kategori = KategoriBuku::all();
         $existingFav = Favourite::where('user_id', $user)->pluck('judul_buku')->toArray();
 
-        return view('index', ['buku' => $buku,'banyak_buku'=>$banyak_buku, 'existingFav'=>$existingFav]);
+        return view('index', ['buku' => $buku,'banyak_buku'=>$banyak_buku, 'existingFav'=>$existingFav, 'kategori'=>$kategori]);
     }
 
     public function search(Request $request){
@@ -187,7 +189,7 @@ class BukuController extends Controller
         $existingFav = Favourite::where('user_id', $user)->where('judul_buku', $buku->judul)->first();
 
 
-        
+
         if(!$existingFav){
             $fav = new Favourite();
             $fav->create([
@@ -210,5 +212,56 @@ class BukuController extends Controller
 
         return view('listFav', compact('addFav'));
     }
+
+    public function populerBook(){
+
+        $buku = Buku::orderBy('rating', 'desc')
+        ->take(10)
+        ->get();
+
+        return view('buku_populer', compact('buku'));
+    }
+
+    public function tambahKategori($id){
+        $buku = Buku::find($id);
+        $namaBuku = $buku->judul;
+        $kategori = KategoriBuku::find($id);
+        return view('tambahKategori', compact('namaBuku', 'kategori'));
+    }
+
+//     public function simpanKategori(Request $request, $kategori)
+// {
+//     // Ambil data buku yang akan ditambahkan kategori
+//     $bukuId = $request->input('buku_id');
+
+//     // Simpan data ke tabel kategori_buku
+//     KategoriBuku::create([
+//         'judul_buku' => $request->input('judul_buku'),
+//         'penulis' => $request->input('penulis'),
+//         'kategori'=> $kategori,
+//         'buku_id' => $bukuId,
+//     ]);
+
+//     return route('/buku');
+// }
+
+public function simpanKategori(Request $request)
+{
+    // Ambil data kategori dari form
+    $kategori = $request->input('kategori');
+    $bukuId = $request->input('buku_id');
+
+    // Simpan data ke tabel kategori_buku
+    KategoriBuku::create([
+        'judul_buku' => $request->input('judul_buku'),
+        'penulis' => $request->input('penulis'),
+        'kategori' => $kategori,
+        'buku_id' => $bukuId,
+    ]);
+
+    // Redirect ke halaman buku setelah simpan kategori
+    return redirect('/buku');
+}
+
 
 }

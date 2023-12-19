@@ -40,6 +40,9 @@ Route::get('/', [BukuController::class, 'galbuku'])->name('galeri.buku');
 Route::get('/buku/{buku}/edit', [BukuController::class, 'edit'])->middleware('auth')->name('buku.edit');
 Route::post('/buku/{buku}/edit', [BukuController::class, 'update'])->middleware('auth')->name('buku.update');
 Route::get('/buku/{buku}/favourite', [BukuController::class, 'addToFav'])->middleware('auth')->name('buku.favourite');
+Route::get('/bukuPopuler', [BukuController::class, 'populerBook'])->middleware('auth')->name('buku.populer');
+Route::get('/tambahKategori/{buku}', [BukuController::class, 'tambahKategori'])->middleware('auth')->name('tambah.kategori');
+Route::post('/bukuKategori/{kategori}', [BukuController::class, 'simpanKategori'])->middleware('auth');
 
 
 Route::get('/favourite', [BukuController::class, 'liatFav'])->middleware('auth');
